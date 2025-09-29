@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import QRCode from 'qrcode.react';
+import { QRCodeSVG } from 'qrcode.react';
 
 interface QRData {
   accountNumber: string;
@@ -15,7 +15,7 @@ const DynamicQR: React.FC<{ amount: number; onrampId: string }> = ({ amount, onr
 
   const generateQR = () => {
     const data: QRData = {
-      accountNumber: '111111111', 
+      accountNumber: 'TU_NUMERO_CUENTA', // Reemplaza con un número de prueba
       bankCode: '02', // Ej. Banco Unión
       amount: amount,
       description: 'Onramp a USDT',
@@ -37,7 +37,7 @@ const DynamicQR: React.FC<{ amount: number; onrampId: string }> = ({ amount, onr
       {qrData && (
         <div className="mt-4">
           <p>Paga {amount} BOB vía $imple</p>
-          <QRCode value={qrData} size={256} />
+          <QRCodeSVG value={qrData} size={256} />
           <p>Escanea con tu app bancaria</p>
         </div>
       )}
@@ -45,4 +45,4 @@ const DynamicQR: React.FC<{ amount: number; onrampId: string }> = ({ amount, onr
   );
 };
 
-export default DynamicQR; 
+export default DynamicQR; // Asegúrate de que esta línea esté presente y sin errores
