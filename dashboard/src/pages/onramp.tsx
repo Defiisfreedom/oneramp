@@ -10,24 +10,17 @@ export default function OnrampPage() {
   const [rate, setRate] = useState<number | null>(null);
   const onrampId = 'tx_' + Date.now();
 
-  // Función para obtener la tasa de cambio desde Binance P2P
+  // Función para obtener la tasa de cambio desde la API route
   async function fetchRate() {
     try {
-      const response = await axios.get(
-        `https://p2p.binance.com/bapi/c2c/v2/friendly/c2c/adv/search?asset=USDT&fiat=BOB&tradeType=BUY&transAmount=100&payTypes=[]&page=1&rows=10`
-      );
-      const offers = response.data.data;
-      if (offers && offers.length > 0) {
-        // Calcula el promedio de las top 5 ofertas de compra (precio en BOB por USDT)
-        const topOffers = offers.slice(0, 5);
-        const averageRate = topOffers.reduce((sum, offer) => sum + parseFloat(offer.adv.price), 0) / topOffers.length;
-        setRate(averageRate);
-      } else {
-        setRate(12.55); // Fallback actualizado a tasa real de hoy
-      }
+      console.log('Fetching rate from local API...');
+      const response = await axios.get('/api/p2pRate');
+      console.log('API response:', response.data);
+      const rate = response.data.rate;
+      setRate(rate);
     } catch (error) {
-      console.error('Error fetching Binance P2P rate:', error);
-      setRate(12.55); // Fallback actualizado a tasa real de hoy
+      console.error('Error fetching rate from local API:', error);
+      setRate(12.59); // Fallback actualizado a tu dato de hoy
     }
   }
 
