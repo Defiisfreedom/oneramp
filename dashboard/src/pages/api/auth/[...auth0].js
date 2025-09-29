@@ -1,4 +1,3 @@
-// pages/api/auth/[...auth0].js
-import { handleAuth } from "@auth0/nextjs-auth0"
-
-export default handleAuth()
+export default (req, res) => {
+  res.status(200).json({ message: 'Auth0 desactivado temporalmente' });
+};
